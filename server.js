@@ -12,7 +12,7 @@ const ACTIONS = require('./actions');
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://c-met.netlify.app',
+        origin: '*',
         methods: ['GET', 'POST'],
     },
 });
@@ -20,7 +20,7 @@ const io = require('socket.io')(server, {
 app.use(cookieParser());
 const corsOption = {
     credentials: true,
-    origin: ['https://c-met.netlify.app'],
+    origin: ['*'],
 };
 app.use(cors(corsOption));
 app.use((req, res, next) => {

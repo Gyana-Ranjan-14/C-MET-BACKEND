@@ -29,7 +29,12 @@ const PORT = process.env.PORT || 5500;
 DbConnect();
 app.use(express.json({ limit: '8mb' }));
 app.use(router);
-
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'https://c-met.netlify.app');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+  
 app.get('/', (req, res) => {
     res.send('Hello from express Js');
 });

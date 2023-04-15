@@ -12,7 +12,7 @@ const ACTIONS = require('./actions');
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://c-met.netlify.app/',
+        origin: 'https://c-met.netlify.app',
         methods: ['GET', 'POST'],
     },
 });
@@ -20,21 +20,27 @@ const io = require('socket.io')(server, {
 app.use(cookieParser());
 const corsOption = {
     credentials: true,
-    origin: ['https://c-met.netlify.app/'],
+    origin: ['https://c-met.netlify.app'],
 };
 app.use(cors(corsOption));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://c-met.netlify.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
+
 app.use('/storage', express.static('storage'));
 
 const PORT = process.env.PORT || 5500;
 DbConnect();
 app.use(express.json({ limit: '8mb' }));
 app.use(router);
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://c-met.netlify.app');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
-  
 app.get('/', (req, res) => {
     res.send('Hello from express Js');
 });

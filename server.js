@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const ACTIONS = require('./actions');
 
 app.use(cors({
-    origin:"https://c-met.netlify.app/",
+    origin:"https://c-met.netlify.app",
     methods:["GET","POST"],
 }));
 const io = require('socket.io')(server, {

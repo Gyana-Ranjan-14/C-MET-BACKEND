@@ -13,6 +13,7 @@ const ACTIONS = require('./actions');
 app.use(cors({
     origin:"https://c-met.netlify.app",
     methods:["GET","POST"],
+    credentials:true,
 }));
 const io = require('socket.io')(server, {
     cors: {
